@@ -28,7 +28,21 @@ func main() {
 		os.Exit(1)
 	}
 
-	_ = storage
+	id, err := storage.SaveUrl("https://google.com", "google")
+	if err != nil {
+		log.Error("failed to save url", sl.Err(err))
+		os.Exit(1)
+	}
+
+	log.Info("saved url id:", slog.Int64("id", id))
+
+	url, err := storage.GetUrl("google")
+	if err != nil {
+		log.Error("failed to get url", sl.Err(err))
+		os.Exit(1)
+	}
+
+	log.Info("retrieved url:", slog.String("url", url))
 
 	// TODO: init router: chi
 
